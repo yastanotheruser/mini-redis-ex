@@ -43,10 +43,11 @@ defmodule MiniRedis do
   defp accept(listen_socket) do
     {:ok, socket} = :gen_tcp.accept(listen_socket)
 
-    pid = spawn(fn ->
-      Protocol.initial_state()
-      |> conn_loop(socket)
-    end)
+    pid =
+      spawn(fn ->
+        Protocol.initial_state()
+        |> conn_loop(socket)
+      end)
 
     :ok = :gen_tcp.controlling_process(socket, pid)
     listen_socket

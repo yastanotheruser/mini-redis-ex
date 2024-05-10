@@ -3,6 +3,7 @@ defmodule MiniRedis.Command do
           {:set, key :: binary, value :: binary}
           | {:get, key :: binary}
           | {:delete, keys :: [binary]}
+          | {:eval, Macro.t()}
           | :ping
 
   @spec parse(String.t(), [binary]) :: :ok | {:ok, t} | :error
