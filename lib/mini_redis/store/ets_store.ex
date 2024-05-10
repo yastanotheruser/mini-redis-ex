@@ -3,7 +3,7 @@ defmodule MiniRedis.Store.EtsStore do
 
   use GenServer
 
-  @ets_defaults [write_concurrency: :auto, read_concurrency: true]
+  @ets_defaults [:private, write_concurrency: :auto, read_concurrency: true]
 
   def start_link(table_opts) do
     GenServer.start_link(__MODULE__, table_opts, name: __MODULE__)
