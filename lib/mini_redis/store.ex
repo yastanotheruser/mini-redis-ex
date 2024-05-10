@@ -27,7 +27,7 @@ defmodule MiniRedis.Store do
 
   @spec has_child_spec?() :: boolean
   def has_child_spec? do
-    impl()
+    impl_module()
     |> Code.ensure_loaded!()
     |> function_exported?(:child_spec, 1)
   end
