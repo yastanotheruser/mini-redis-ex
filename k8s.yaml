@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mini-redis-ex-deployment
+  labels:
+    app: mini-redis-ex
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: mini-redis-ex
+  template:
+    metadata:
+      name: mini-redis-ex-pod
+      labels:
+        app: mini-redis-ex
+    spec:
+      containers:
+        - name: mini-redis-ex-container
+          image: mini_redis_ex
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mini-redis-ex-service
+  labels:
+    app: mini-redis-ex
+spec:
+  type: LoadBalancer
+  selector:
+    app: mini-redis-ex
+  ports:
+    - port: 7963
+      protocol: TCP
+      name: mini-redis-ex-port
