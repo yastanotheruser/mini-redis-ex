@@ -64,10 +64,9 @@ defmodule MiniRedis do
         packet
         |> Protocol.read(state)
         |> case do
-          {:command, [name | args]} ->
-            name
-            |> String.upcase()
-            |> Command.parse(args)
+          {:command, cmd} ->
+            cmd
+            |> Command.parse()
             |> handle_parse_result(socket)
 
             Protocol.initial_state()
